@@ -1,0 +1,10 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_title">26dp</dimen>
+    <dimen name="paddingRight_menu">5dp</dimen>
+    <dimen name="loginRegisSizeText">30dp</dimen>
+    <dimen name="size_school">25dp</dimen>
+    <dimen name="school">46dp</dimen>
+</resources>

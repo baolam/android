@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Gửi xe thông minh</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="title">Hệ thống gửi xe thông minh</string>
+    <string name="login">Login</string>
+    <string name="qrCode">Quét mã QR</string>
+    <string name="school">Trường THCS&amp;THPT Đống Đa</string>
+    <string name="CodeActivity">QRCodeActivity</string>
+    <string name="CreateUser">Register</string>
+    <string name="md_nof_login">Normal</string>
+    <string name="promp_passport">Phone mumber</string>
+    <string name="name_register">Name</string>
+    <string name="pass_register">Password</string>
+    <string name="regis_btn">Register</string>
+    <string name="logOut">Log out</string>
+    <string name="emailKP">Email</string>
+</resources>

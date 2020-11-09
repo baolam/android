@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/school"
+        android:gravity="center"
+        android:text="@string/school"
+        android:textSize="@dimen/size_school"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"/>
+
+    <ImageView
+        android:id="@+id/QR_image"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="276dp"
+        android:layout_marginTop="125dp" />
+
+    <EditText
+        android:id="@+id/generateQR"
+        android:hint="Please enter your favorite char"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="206dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="41dp"
+        android:layout_marginStart="34dp" />
+
+    <TextView
+        android:id="@+id/error_editText_generateQR"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="149dp"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/ScanQr"
+        android:layout_width="197dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
+        android:gravity="center"
+        android:text="@string/qrCode"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/LoginBtn"
+        android:layout_width="198dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="211dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="211dp"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textStyle="bold" />
+</RelativeLayout>
