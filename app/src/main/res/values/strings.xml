@@ -7,7 +7,7 @@
     <string name="title">Hệ thống gửi xe thông minh</string>
     <string name="login">Login</string>
     <string name="qrCode">Quét mã QR</string>
-    <string name="school">Trường THCS&amp;THPT Đống Đa</string>
+    <string name="school">Trường THCS&amp;THPT Mai Châu</string>
     <string name="CodeActivity">QRCodeActivity</string>
     <string name="CreateUser">Register</string>
     <string name="md_nof_login">Normal</string>
@@ -17,4 +17,5 @@
     <string name="regis_btn">Register</string>
     <string name="logOut">Log out</string>
     <string name="emailKP">Email</string>
+    <string name="btn_send_form">Gửi đơn</string>
 </resources>

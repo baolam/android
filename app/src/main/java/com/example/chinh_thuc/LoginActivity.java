@@ -20,15 +20,10 @@ import java.io.StringWriter;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
-public class LoginActivity extends AppCompatActivity {
-    EditText name_text, password_text;
-    TextView nof_login;
-    Button login, register;
-
-    private int length = Toast.LENGTH_SHORT;
-    private int tryToLogin = 5;
-    private String name_pri;
-    private String pass_pri;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private EditText name_text;
+    private EditText password_text;
+    private TextView nof_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,146 +33,98 @@ public class LoginActivity extends AppCompatActivity {
         name_text = findViewById(R.id.username);
         password_text = findViewById(R.id.password);
         nof_login = findViewById(R.id.nof_login);
-        login = findViewById(R.id.login);
-        register = findViewById(R.id.Register);
 
-        register.setEnabled(false);
+        Button login = findViewById(R.id.login);
+        Button register = findViewById(R.id.Register);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint(value = "StaticFieldLeak")
-            @Override
-             public void onClick(View v) {
-                String name = name_text.getText().toString();
-                String pass = password_text.getText().toString();
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
 
-                name_pri = name;
-                pass_pri = pass;
+        Intent data = getIntent();
+        if (data != null) {
+            register.setEnabled(false);
+        }
+    }
 
-                if(name.length() == 0 && pass.length() == 0) {
-                    final CharSequence nof = "Name is not valid" + '\n' + "Password is not valid";
-                    Log.d("DEBUG", nof.toString());
-                    nof_login.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            nof_login.setText(nof);
-                        }
-                    });
-                }
-                else if(name.length() == 0) {
-                    final CharSequence nof = "Name is not valid";
-                    Log.d("DEBUG", nof.toString());
-                    nof_login.post(new Runnable() {
-                        @Override
-                        public void run() {
-                             //nof_login.setTextColor(Integer.parseInt("#FF0000"));
-                            nof_login.setText(nof);
-                        }
-                    });
-                }
-                else if(pass.length() == 0) {
-                    final CharSequence nof = "Password is not valid";
-                    Log.d("DEBUG", nof.toString());
-                    nof_login.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //nof_login.setTextColor(Integer.parseInt("#FF0000"));
-                            nof_login.setText(nof);
-                        }
-                    });
-                }
-                else {
-                    JSONObject host_url = new JSONObject();
-                    JSONObject data = new JSONObject();
-
-                    try {
-                        host_url.put("url", VariableConfig.host + ":" + VariableConfig.port + VariableConfig.url_login);
-                        host_url.put("method", "POST");
-
-                        data.put("name", name);
-                        data.put("password", pass);
-
-                        new HTTPPostHandler() {
-                            @Override
-                            public void onResponseData(String response) {
-                                super.onResponseData(response);
-                                assert response != null;
-                                try {
-                                    //Log.d("TESTING", response);
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    Context context = getApplicationContext();
-                                    boolean error = jsonObject.getBoolean("error");
-                                    if(error) {
-                                        String message = jsonObject.getString("message");
-                                        boolean state_err = jsonObject.getBoolean("state");
-
-                                        register.setEnabled(true);
-                                        tryToLogin --;
-
-                                        String lt = Integer.toString(tryToLogin);
-                                        final CharSequence nof = message + "\n" + "Lần thử: " + lt;
-
-                                        nof_login.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                nof_login.setText(nof);
-                                            }
-                                        });
-
-                                        if(state_err) {
-                                            // Lỗi này ứng với trường hợp người dùng nhập sai tên hoặc password
-                                            if(tryToLogin == 0) {
-                                                login.setEnabled(false);
-                                                // Gửi lệnh vô hiệu hóa tài khoản
-                                                // Giả lập việc vô hiệu hóa tài khoản người dùng
-                                            }
-
-                                        }
-                                        else {
-                                            // Lỗi người dùng chưa đăng ký tài khoản đặt khả năng cao là hacker
-                                            if(tryToLogin == 0) {
-                                                login.setEnabled(false);
-                                            }
-                                        }
-                                    }
-                                    else {
-                                        String name = jsonObject.getString("name");
-                                        String message = jsonObject.getString("message");
-                                        boolean special = jsonObject.getBoolean("special");
-
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-                                        intent.putExtra("state", "login");
-                                        intent.putExtra("name", name);
-                                        intent.putExtra("message", message);
-                                        intent.putExtra("sp", special);
-
-                                        startActivity(intent);
-                                    }
-                                }
-                                catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        }.execute(host_url, data);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login: {
+                handleLogin();
+                break;
             }
-        });
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, Register.class);
-
-                intent.putExtra("name", name_pri);
-                intent.putExtra("password", pass_pri);
-
-                startActivity(intent);
+            case R.id.Register: {
+                startRegisterActivity();
+                break;
             }
-        });
+        }
+    }
+
+    private void startRegisterActivity() {
+        Intent intent = new Intent(LoginActivity.this, Register.class);
+        startActivity(intent);
+    }
+
+    @SuppressLint({"StaticFieldLeak", "SetTextI18n"})
+    private void handleLogin() {
+        String name = name_text.getText()
+                .toString();
+        String password = password_text.getText()
+                .toString();
+        if (checkValid(name, password)) {
+            JSONObject config_srv = new JSONObject();
+            JSONObject information = new JSONObject();
+
+            try {
+                 config_srv.put("url", MainActivity.server + "/user/login");
+                 config_srv.put("method", "POST");
+
+                 information.put("name", name);
+                 information.put("password", password);
+
+                 new HTTPPostHandler() {
+                     @Override
+                     public void onResponseData(final String response) {
+                         super.onResponseData(response);
+
+                         try {
+                             JSONObject resp = new JSONObject(response);
+
+                             boolean err = resp.getBoolean("err");
+                             final String msg = resp.getString("msg");
+
+                             if (err) {
+                                 runOnUiThread(new Runnable() {
+                                     @Override
+                                     public void run() {
+                                         nof_login.setText(msg);
+                                     }
+                                 });
+                                 return;
+                             }
+
+                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                             startActivity(intent);
+                         } catch (JSONException e) {
+                             Log.d("ERROR", e.toString());
+                             e.printStackTrace();
+                         }
+
+                     }
+                 }.execute(config_srv, information);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            nof_login.setText("Thông tin đăng nhập sai");
+        }
+    }
+
+    private boolean checkValid(String name, String password) {
+        return ! name.equals("")
+                && ! password.equals("")
+                && name.indexOf('@') != -1;
     }
 }

@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".Register"/>
+        <activity android:name=".CarformActivity"/>
+        <activity android:name=".Register" />
         <activity android:name=".QRCodeScan" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
@@ -32,4 +33,5 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
     </application>
+
 </manifest>

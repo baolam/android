@@ -38,6 +38,8 @@ public class HTTPPostHandler extends AsyncTask<JSONObject, String, String> {
             String url = jsonObject.getString("url");
             String method = jsonObject.getString("method");
 
+            Log.d("TESTING", url);
+
             HttpURLConnection httpURLConnection = ConfigRequest(url, method);
             SendRequest(httpURLConnection, data);
 

@@ -32,12 +32,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    implementation 'com.github.nisrulz:qreader:2.1.1'
+    implementation 'info.androidhive:barcode-reader:1.1.2'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
-    implementation 'com.google.android.gms:play-services-vision:20.1.2'
+    implementation 'com.google.android.gms:play-services-vision:11.0.2'
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
-
 }
