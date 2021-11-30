@@ -26,11 +26,6 @@ import java.util.List;
 import info.androidhive.barcode.BarcodeReader;
 
 public class QRCodeScan extends AppCompatActivity implements BarcodeReader.BarcodeReaderListener {
-    private SurfaceView camera;
-    private CameraSource cameraSource;
-    private BarcodeDetector barcodeDetector;
-    public int counter = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
