@@ -1,4 +1,4 @@
-package com.example.chinh_thuc;
+ package com.example.chinh_thuc;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +24,7 @@ public class CarformActivity extends AppCompatActivity implements View.OnClickLi
     private EditText edt_ten;
     private TextView tv_form;
     private Socket mSocket;
+    private Integer position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,22 @@ public class CarformActivity extends AppCompatActivity implements View.OnClickLi
         Button btn_send_form = findViewById(R.id.btn_send_form);
 
         btn_send_form.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mSocket.connected()) {
+            mSocket.disconnect();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSocket.connected()) {
+            mSocket.disconnect();
+        }
     }
 
     @SuppressLint({"StaticFieldLeak", "SetTextI18n"})
@@ -75,17 +92,28 @@ public class CarformActivity extends AppCompatActivity implements View.OnClickLi
                                          Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                                         }
                                     });
+
+                                    return;
                                 }
 
                                 // Initalize socket --> handle
                                 // Wait
-                                try {
-                                    mSocket = IO.socket(MainActivity.server + "/io/user");
-                                    mSocket.on("notification", onGetNotification);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                    }
+                                });
 
-                                    mSocket.connect();
+                                if (position == -1) {
+                                    position = resp.getInt("pos");
 
-                                    if (mSocket.connected()) {
+                                    try {
+                                        mSocket = IO.socket(MainActivity.server + "/io/user");
+                                        mSocket.on("notification", onGetNotification);
+
+                                        mSocket.connect();
+
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -93,9 +121,9 @@ public class CarformActivity extends AppCompatActivity implements View.OnClickLi
                                                         .show();
                                             }
                                         });
+                                    } catch (URISyntaxException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (URISyntaxException e) {
-                                    e.printStackTrace();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -125,18 +153,14 @@ public class CarformActivity extends AppCompatActivity implements View.OnClickLi
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
                     try {
-                        String notify = data.getString("warm");
-                        boolean ok = data.getBoolean("ok");
+                        String notify = data.getString("msg");
+                        String event = data.getString("event");
+                        int pos = data.getInt("pos");
 
-                        if (ok) {
-                            Toast.makeText(getApplicationContext(), "Thành công", Toast.LENGTH_LONG)
+                        if (pos == position) {
+                            Toast.makeText(getApplicationContext(), notify, Toast.LENGTH_LONG)
                                     .show();
-                            mSocket.disconnect();
-                            return;
                         }
-
-                        Toast.makeText(getApplicationContext(), notify, Toast.LENGTH_LONG)
-                                .show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

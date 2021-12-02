@@ -19,7 +19,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    public static String server = "http://192.168.1.10:3000";
+    public static String server = "http://gxtm-ver2.herokuapp.com";
     private ImageView imgQR;
     private EditText edt_server;
 
